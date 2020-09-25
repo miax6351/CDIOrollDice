@@ -1,6 +1,8 @@
 package Play;
+
 import gui_fields.GUI_Field;
 import gui_main.GUI;
+
 import java.awt.*;
 import java.util.Scanner;
 
@@ -11,8 +13,8 @@ public class DiceGame {
         Dice die2 = new Dice();
 
         //points to begin with, and player names
-        Player p1 = new Player(0, "Pontus");
-        Player p2 = new Player(0,"Halfdan");
+        Player p1 = new Player(0, "Pontus", die1, die2);
+        Player p2 = new Player(0, "Halfdan", die1, die2);
 
         //GUI
        /* GUI.setNull_fields_allowed(true);
@@ -24,35 +26,53 @@ public class DiceGame {
 
         Scanner rafle = new Scanner(System.in);
         System.out.println("SHAKE RAFFLE CUP \nby typing >>roll<<");
+        System.out.println("\nShake it " + p1.playerName + ";)");
 
         //x = 1 as player 1 begins
         int x = 1;
         //the loop continues indefinitely atm
         while (true) {
             String s = rafle.nextLine();
-            switch(x) {
+            switch (x) {
                 case 1:
-                if (s.equalsIgnoreCase("roll")) {
-                    die1.rollDice();
-                    die2.rollDice();
+                    //player one shakes the raffle cup and rolls the dices, if he/she/they types roll ;)
+                    if (s.equalsIgnoreCase("roll")) {
+                        die1.rollDice();
+                        die2.rollDice();
 
-                    System.out.println(die1.getFaceValue());
-                    System.out.println(die2.getFaceValue());
-                    //gui.setDice(die1.getFaceValue(), die2.getFaceValue());
+                        //the dices' face values are printed to the console
+                        System.out.println(die1.getFaceValue());
+                        System.out.println(die2.getFaceValue());
+                        //gui.setDice(die1.getFaceValue(), die2.getFaceValue());
 
-                    //player 1's points
-                    p1.points += p1.playerPoints(die1.getFaceValue() + die2.getFaceValue());
-                    System.out.println(p1.playerName + ":" + p1.points);
-                    x++;
-                    if (die1.getFaceValue() == die2.getFaceValue()) {
-                        x = 1;
+                        //extra turn if player 1 gets doubles
+                        if (die1.getFaceValue() == die2.getFaceValue()) {
+                            p1.points += p1.plusPoints();
+                            x = 1;
+                            if (die1.getFaceValue() + die2.getFaceValue() == 2) {
+                                p1.points = 0;
+                                //x++ as it now is player 2's turn
+                                x++;
+
+                            }
+
+                            System.out.println(p1.playerName + ":" + p1.points);
+                        } else {
+                            //player 1's points are calculated on behalf of the sum of the face value of the dices
+                            p1.points += p1.plusPoints();
+                            System.out.println(p1.playerName + ":" + p1.points);
+                            //x++ as it now is player 2's turn
+                            x++;
+                        }
+                        System.out.println("Shake it " + p2.playerName + ";))");
+                        break;
+
+                    } else {
+                        System.out.println(":( plz");
                     }
-                    break;
-
-                } else {
-                    System.out.println(":( plz");
-                }
                 case 2:
+
+                    //player one rolls the dices, if he/she/they types roll ;)
                     if (s.equalsIgnoreCase("roll")) {
                         die1.rollDice();
                         die2.rollDice();
@@ -61,19 +81,29 @@ public class DiceGame {
                         System.out.println(die2.getFaceValue());
                         //gui.setDice(die1.getFaceValue(), die2.getFaceValue());
 
-                        //player 2's points
-                        p2.points += p2.playerPoints(die1.getFaceValue() + die2.getFaceValue());
-                        System.out.println(p2.playerName + ":" + p2.points);
-                        x--;
                         if (die1.getFaceValue() == die2.getFaceValue()) {
+                            p2.points += p2.plusPoints();
                             x = 2;
+                            if (die1.getFaceValue() + die2.getFaceValue() == 2) {
+                                p2.points = 0;
+                                x--;
+                            }
+
+                            System.out.println(p2.playerName + ":" + p2.points);
+                        } else {
+
+                            //player 2's points
+                            p2.points += p2.plusPoints();
+                            System.out.println(p2.playerName + ":" + p2.points);
+                            //x-- as it now is player 1's turn
+                            x--;
                         }
+                        System.out.println("\nShake it " + p1.playerName + ";)");
 
                     } else {
                         System.out.println(":( plz");
                     }
             }
-
 
 
         }
