@@ -31,7 +31,7 @@ public class DiceGame {
         //x = 1 as player 1 begins
         int x = 1;
         //the loop continues indefinitely atm
-        while (true) {
+        while (p1.points < 40 && p2.points < 40) {
             String s = rafle.nextLine();
             switch (x) {
                 case 1:
@@ -64,7 +64,7 @@ public class DiceGame {
                             //x++ as it now is player 2's turn
                             x++;
                         }
-                        System.out.println("Shake it " + p2.playerName + ";))");
+
                         break;
 
                     } else {
@@ -98,7 +98,7 @@ public class DiceGame {
                             //x-- as it now is player 1's turn
                             x--;
                         }
-                        System.out.println("\nShake it " + p1.playerName + ";)");
+
 
                     } else {
                         System.out.println(":( plz");
@@ -106,6 +106,11 @@ public class DiceGame {
             }
 
 
+        }
+        if (p1.points > 40) {
+            System.out.println("TILLYKKE " + p1.playerName);
+        } else {
+            System.out.println("TILLYKKE " + p2.playerName);
         }
     }
 }
