@@ -10,7 +10,7 @@ public class DiceGame {
 
         Scanner rafle = new Scanner(System.in);
         System.out.println("SHAKE RAFFLE CUP \nby typing >>roll<<");
-
+//comment
         while (true) {
             String s = rafle.nextLine();
             if (s.equalsIgnoreCase("roll")) {
